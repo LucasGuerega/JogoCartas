@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Jogo de Cartas</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+</head>
+<body>
+
+    <h1>Multiplayer</h1>
+
+    <!-- PAINEL DE CONEXÃO -->
+    <div class="painel">
+        <h3>1. Criar ou Entrar em uma Sala</h3>
+        <input type="text" id="id-player" placeholder="Digite seu nome">
+        </div>
+        <div>
+            <button onclick="criarSala()">Criar Nova Sala (Host)</button>
+        </div>
+        <p>OU</p>
+        <div>
+           
+            <input type="text" id="id-sala-input" placeholder="Cole o ID da sala aqui">
+            <button onclick="entrarNaSala(document.getElementById('id-player').value); generateName()">Entrar na Sala</button>
+        </div>
+        <p><strong>Status:</strong> <span id="status">Desconectado</span></p>
+        <p><strong>Seu ID / ID da Sala:</strong> <span id="meu-id">-</span></p>
+    </div>
+
+    <!-- MESA DO JOGO -->
+    <div class="painel">
+        <h3>2. Suas Cartas (Clique em uma carta para jogar)</h3>
+        <div class="mao">
+            <div class="carta" onclick="jogarCarta('VERDE')">Verde</div>
+            <div class="carta" onclick="jogarCarta('AZUL')">Azul</div>
+        </div>
+    </div>
+
+    <!-- LOG DE AÇÕES -->
+    <div class="painel">
+        <h3>Histórico da Mesa</h3>
+        <div id="historico">Esperando conexões...<br></div>
+    </div>
+
+    <script src="./assets/js/script.js"></script>
+</body>
+</html>
