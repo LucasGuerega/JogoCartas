@@ -9,41 +9,94 @@
 </head>
 <body>
 
-    <h1>Multiplayer</h1>
+    <h1>Meu Jogo de Cartas</h1>
 
-    <!-- PAINEL DE CONEXÃO -->
-    <div class="painel">
-        <h3>1. Criar ou Entrar em uma Sala</h3>
-        <input type="text" id="id-player" placeholder="Digite seu nome">
-        </div>
+    <!-- TELA 1: CONEXÃO -->
+    <div class="painel" id="tela-conexao">
+        <h3>Criar ou entrar em uma sala</h3>
+        <input type="text" id="id-player" placeholder="Digite seu nome" maxlength="20">
         <div>
-            <button onclick="criarSala()">Criar Nova Sala (Host)</button>
+            <button onclick="criarSala()">Criar nova sala (Host)</button>
         </div>
         <p>OU</p>
         <div>
-           
-            <input type="text" id="id-sala-input" placeholder="Cole o ID da sala aqui">
-            <button onclick="entrarNaSala(document.getElementById('id-player').value); generateName()">Entrar na Sala</button>
+            <input type="text" id="id-sala-input" placeholder="Código da sala (4 números)" inputmode="numeric" maxlength="4">
+            <button onclick="entrarNaSala()">Entrar na sala</button>
         </div>
         <p><strong>Status:</strong> <span id="status">Desconectado</span></p>
-        <p><strong>Seu ID / ID da Sala:</strong> <span id="meu-id">-</span></p>
     </div>
 
-    <!-- MESA DO JOGO -->
-    <div class="painel">
-        <h3>2. Suas Cartas (Clique em uma carta para jogar)</h3>
-        <div class="mao">
-            <div class="carta" onclick="jogarCarta('VERDE')">Verde</div>
-            <div class="carta" onclick="jogarCarta('AZUL')">Azul</div>
+    <!-- TELA 2: LOBBY (escolha de equipes) -->
+    <div class="painel oculto" id="tela-lobby">
+        <h3>Sala <span id="codigo-sala" class="codigo">----</span></h3>
+        <p class="ajuda">Passe esse código para os outros jogadores. Cada equipe é uma dupla.</p>
+
+        <div class="equipes">
+            <div class="equipe" id="box-eq-0">
+                <h4 id="titulo-eq-0"></h4>
+                <ul id="lista-eq-0"></ul>
+                <button onclick="escolherEquipe(0)">Entrar nesta equipe</button>
+            </div>
+            <div class="equipe" id="box-eq-1">
+                <h4 id="titulo-eq-1"></h4>
+                <ul id="lista-eq-1"></ul>
+                <button onclick="escolherEquipe(1)">Entrar nesta equipe</button>
+            </div>
         </div>
+
+        <p>Sem equipe: <span id="lista-sem-equipe">—</span></p>
+
+        <div id="config-host" class="oculto">
+            <label>Casas do tabuleiro:
+                <input type="number" id="input-tamanho" min="10" max="100" value="40" onchange="mudarTamanho()">
+            </label>
+            <div>
+                <button onclick="iniciarPartida()">Iniciar partida</button>
+            </div>
+        </div>
+        <p class="ajuda" id="aviso-lobby"></p>
+    </div>
+
+    <!-- TELA 3: JOGO -->
+    <div id="tela-jogo" class="oculto">
+
+        <div class="painel largo">
+            <h3>Tabuleiro</h3>
+            <div id="placar"></div>
+            <div id="tabuleiro" class="tabuleiro"></div>
+        </div>
+
+        <div class="painel" id="turno-info"></div>
+
+        <div class="painel" id="area-carta"></div>
+
+        <details class="painel oculto" id="ajustes-host">
+            <summary>Ajustes do host</summary>
+            <div class="ajuste">
+                <span id="aj-nome-0"></span>
+                <button onclick="ajustar(0, -1)">−1 casa</button>
+                <button onclick="ajustar(0, 1)">+1 casa</button>
+            </div>
+            <div class="ajuste">
+                <span id="aj-nome-1"></span>
+                <button onclick="ajustar(1, -1)">−1 casa</button>
+                <button onclick="ajustar(1, 1)">+1 casa</button>
+            </div>
+            <div>
+                <button class="secundario" onclick="agir({ tipo: 'PULAR_VEZ' })">Pular vez (nova carta)</button>
+                <button class="secundario" onclick="agir({ tipo: 'NOVA_PARTIDA' })">Voltar ao lobby</button>
+            </div>
+        </details>
     </div>
 
     <!-- LOG DE AÇÕES -->
     <div class="painel">
         <h3>Histórico da Mesa</h3>
-        <div id="historico">Esperando conexões...<br></div>
+        <div id="historico"><div>Esperando conexões...</div></div>
     </div>
 
-    <script src="./assets/js/script.js"></script>
+    <script src="./assets/js/cartas.js"></script>
+    <script src="./assets/js/conn.js"></script>
+    <script src="./assets/js/playMech.js"></script>
 </body>
 </html>
